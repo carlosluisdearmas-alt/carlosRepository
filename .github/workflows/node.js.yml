@@ -2,7 +2,7 @@ name: CI de mi Proyecto Angular
 
 on:
   push:
-    branches: [ "main" ]  # Se activa cada vez que subes código a main
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -10,11 +10,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Configurar Node.js
+    - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 20
-        cache: 'npm'
+        node-version: '20.x'
     - run: npm install
     - run: npm run build
+    # Esta es la línea mágica que hará que se ponga verde
+    - run: npx playwright install --with-deps
     - run: npm test -- --watch=false --browsers=ChromeHeadless
